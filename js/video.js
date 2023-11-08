@@ -1,4 +1,4 @@
-var video;
+var video = document.querySelector("#player1");
 
 
 // Assume global variable 'video' is defined
