@@ -12,9 +12,8 @@ window.addEventListener("load", function() {
 // Play Button
 document.querySelector("#play").addEventListener("click", function() {
 	console.log("play video");
+	document.getElementById("volume").textContent = video.volume * 100 + "%";
 	video.play();
-	let vol =document.querySelector("#volume").innerHTML = (video.volume * 100) + "%";
-    //updateVolume();
 });
 
 // Pause Button
@@ -49,24 +48,25 @@ document.querySelector("#skip").addEventListener("click", function() {
 
 // Mute
 document.querySelector("#mute").addEventListener("click", function() {
-    if(video.muted == true){
-        video.muted = false;
-        document.querySelector('#mute').innerHTML = "Mute";
-    } else {
-        video.muted = true;
-        document.querySelector('#mute').innerHTML = "Unmute";
-    }
+	if (video.muted){
+		video.muted = false;
+		console.log("Video unmuted")
+		document.getElementById("mute").textContent = "Mute";
+		document.getElementById("volume").textContent = document.getElementById("slider").value + "%";
+	} else {
+		video.muted = true;
+		console.log("Video muted");
+		document.getElementById("mute").textContent = "Unmute";
+		document.getElementById("volume").textContent = 0 * 100 + "%";
+	}
 });
 
 // Volume Slider
-document.querySelector("#slider").addEventListener("input", function() {
+document.querySelector("#slider").addEventListener("change", function() {
 
-
-	slide = document.getElementById("slider");
-	video.volume = slide.value / 100;
-	let vol = document.querySelector("#volume").innerHTML = (video.volume * 100) + "%";
-	console.log(video.volume);
-
+	video.volume = document.getElementById("slider").value / 100;
+	document.getElementById("volume").textContent = video.volume * 100 + "%";
+	console.log("Volume slided!");
 });
 
 
