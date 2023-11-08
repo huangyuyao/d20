@@ -1,13 +1,18 @@
-var video = document.querySelector("#player1");
+var video = document.getElementById("player1");
 
 
 // Assume global variable 'video' is defined
 window.addEventListener("load", function() {
-    console.log("Good job opening the window");
-    video = document.querySelector("#player1");
-    video.autoplay = false;
-    video.loop = false;
+	console.log("Good job opening the window")
+	video.autoplay = false;
+	video.loop = false;
 });
+
+document.querySelector("#play").addEventListener("click", function() {
+    console.log("Play Video");
+	video.play();
+	updateVolume();
+ });
 
 // Play Button
 document.querySelector("#play").addEventListener("click", function() {
@@ -25,48 +30,40 @@ document.querySelector("#pause").addEventListener("click", function() {
 // Slow Down
 document.querySelector("#slower").addEventListener("click", function() {
     video.playbackRate *= 0.9;
-    console.log("New speed is " + video.playbackRate);
+    console.log("New speed: " + video.playbackRate);
 });
 
 // Speed Up
 document.querySelector("#faster").addEventListener("click", function() {
     video.playbackRate /= 0.9;
-    console.log("New speed is " + video.playbackRate);
+    console.log("New speed: " + video.playbackRate);
 });
 
 // Skip Ahead
 document.querySelector("#skip").addEventListener("click", function() {
-    if(video.currentTime + 10 > video.duration){
-        video.currentTime = 0;
-        console.log("Going back to the start");
-    } else {
+	if (video.currentTime + 10 < video.duration) {
         video.currentTime += 10;
+    } else {
+        video.currentTime = 0;
     }
-    console.log("Current location is " + video.currentTime);
-	video.play();
-});
+    console.log("Current Time: " + video.currentTime);
 
 // Mute
 document.querySelector("#mute").addEventListener("click", function() {
-	if (video.muted){
-		video.muted = false;
-		console.log("Video unmuted")
-		document.getElementById("mute").textContent = "Mute";
-		document.getElementById("volume").textContent = document.getElementById("slider").value + "%";
-	} else {
-		video.muted = true;
-		console.log("Video muted");
-		document.getElementById("mute").textContent = "Unmute";
-		document.getElementById("volume").textContent = 0 * 100 + "%";
-	}
+	if (video.muted) {
+        video.muted = false;
+        muteButton.textContent = "Mute";
+    } else {
+        video.muted = true;
+        muteButton.textContent = "Unmute";
+    }
 });
 
 // Volume Slider
 document.querySelector("#slider").addEventListener("change", function() {
-
-	video.volume = document.getElementById("slider").value / 100;
-	document.getElementById("volume").textContent = video.volume * 100 + "%";
-	console.log("Volume slided!");
+	video.volume = (this.value / 100.0);
+	document.querySelector("#volume").innerHTML = ((video.volume * 100.0) + "%");
+    video.slider();
 });
 
 
